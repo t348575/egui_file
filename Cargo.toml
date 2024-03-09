@@ -11,5 +11,5 @@ name = "egui_file"
 repository = "https://github.com/Barugon/egui_file"
 version = "0.16.3"
 
-[dependencies.egui]
-version = "0.26"
+[dependencies.bevy_egui]
+version = "0.25"

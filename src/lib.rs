@@ -9,7 +9,7 @@ use std::{
   path::{Path, PathBuf},
 };
 
-use egui::{
+use bevy_egui::egui::{
   vec2, Align2, Context, Id, Key, Layout, Pos2, RichText, ScrollArea, TextEdit, Ui, Vec2, Window,
 };
 
@@ -485,7 +485,7 @@ impl FileDialog {
     let mut command: Option<Command> = None;
 
     // Top directory field with buttons.
-    egui::TopBottomPanel::top("egui_file_top").show_inside(ui, |ui| {
+    bevy_egui::egui::TopBottomPanel::top("egui_file_top").show_inside(ui, |ui| {
       ui.horizontal(|ui| {
         ui.add_enabled_ui(self.path.parent().is_some(), |ui| {
           let response = ui.button("⬆").on_hover_text("Parent Folder");
@@ -493,7 +493,7 @@ impl FileDialog {
             command = Some(Command::UpDirectory);
           }
         });
-        ui.with_layout(Layout::right_to_left(egui::Align::Center), |ui| {
+        ui.with_layout(Layout::right_to_left(bevy_egui::egui::Align::Center), |ui| {
           let response = ui.button("⟲").on_hover_text("Refresh");
           if response.clicked() {
             command = Some(Command::Refresh);
@@ -514,11 +514,11 @@ impl FileDialog {
     });
 
     // Bottom file field.
-    egui::TopBottomPanel::bottom("egui_file_bottom").show_inside(ui, |ui| {
+    bevy_egui::egui::TopBottomPanel::bottom("egui_file_bottom").show_inside(ui, |ui| {
       ui.add_space(ui.spacing().item_spacing.y * 2.0);
       ui.horizontal(|ui| {
         ui.label("File:");
-        ui.with_layout(Layout::right_to_left(egui::Align::Center), |ui| {
+        ui.with_layout(Layout::right_to_left(bevy_egui::egui::Align::Center), |ui| {
           if self.new_folder && ui.button("New Folder").clicked() {
             command = Some(Command::CreateDirectory);
           }
@@ -613,7 +613,7 @@ impl FileDialog {
         }
 
         #[cfg(unix)]
-        ui.with_layout(Layout::right_to_left(egui::Align::Center), |ui| {
+        ui.with_layout(Layout::right_to_left(bevy_egui::egui::Align::Center), |ui| {
           if ui.checkbox(&mut self.show_hidden, "Show Hidden").changed() {
             self.refresh();
           }
@@ -622,10 +622,10 @@ impl FileDialog {
     });
 
     // File list.
-    egui::CentralPanel::default().show_inside(ui, |ui| {
+    bevy_egui::egui::CentralPanel::default().show_inside(ui, |ui| {
       ScrollArea::vertical().show_rows(
         ui,
-        ui.text_style_height(&egui::TextStyle::Body),
+        ui.text_style_height(&bevy_egui::egui::TextStyle::Body),
         self.files.as_ref().map_or(0, |files| files.len()),
         |ui, range| match self.files.as_ref() {
           Ok(files) => {
